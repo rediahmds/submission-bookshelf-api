@@ -183,7 +183,7 @@ const handlers = {
       reading,
     };
 
-    books.splice(bookIndex, 0, updatedBook);
+    books.splice(bookIndex, 1, updatedBook);
     return h.response({
       status: 'success',
       message: 'Buku berhasil diperbarui',
@@ -202,7 +202,7 @@ const handlers = {
         .code(404);
     }
 
-    // Delete the book
+    // Delete book
     books.splice(bookIndex, 1);
 
     return h.response({
