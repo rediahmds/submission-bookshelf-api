@@ -119,6 +119,76 @@ const handlers = {
       },
     });
   },
+  updateBook: (req, h) => {
+    const {
+      name,
+      year,
+      author,
+      summary,
+      publisher,
+      pageCount,
+      readPage,
+      reading,
+    } = req.payload;
+
+    const { id } = req.params;
+
+    // If no name provided, return error response
+    if (!name) {
+      return h
+        .response({
+          status: 'fail',
+          message: 'Gagal memperbarui buku. Mohon isi nama buku',
+        })
+        .code(400);
+    }
+
+    // If read page > page count, return error response
+    if (readPage > pageCount) {
+      return h
+        .response({
+          status: 'fail',
+          message:
+            'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
+        })
+        .code(400);
+    }
+
+    // What if the id is not match?
+    const bookFound = books.find(book => book.id === id); // original book
+    const bookIndex = books.findIndex(book => book.id === id);
+
+    // If id not found, return error response
+    if (!bookFound || bookIndex === -1) {
+      return h
+        .response({
+          status: 'fail',
+          message: 'Gagal memperbarui buku. Id tidak ditemukan',
+        })
+        .code(404);
+    }
+
+    // Update the book
+    const updatedAt = new Date().toISOString();
+    const updatedBook = {
+      ...bookFound,
+      name,
+      year,
+      author,
+      summary,
+      publisher,
+      readPage,
+      pageCount,
+      updatedAt,
+      reading,
+    };
+
+    books.splice(bookIndex, 0, updatedBook);
+    return h.response({
+      status: 'success',
+      message: 'Buku berhasil diperbarui',
+    });
+  },
 };
 
 module.exports = handlers;
