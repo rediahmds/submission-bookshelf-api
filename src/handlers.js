@@ -189,6 +189,27 @@ const handlers = {
       message: 'Buku berhasil diperbarui',
     });
   },
+  deleteBookByID: (req, h) => {
+    const { id } = req.params;
+    const bookIndex = books.findIndex(book => book.id === id);
+
+    if (bookIndex === -1) {
+      return h
+        .response({
+          status: 'fail',
+          message: 'Buku gagal dihapus. Id tidak ditemukan',
+        })
+        .code(404);
+    }
+
+    // Delete the book
+    books.splice(bookIndex, 1);
+
+    return h.response({
+      status: 'success',
+      message: 'Buku berhasil dihapus',
+    });
+  },
 };
 
 module.exports = handlers;
