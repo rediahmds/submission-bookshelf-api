@@ -1,3 +1,5 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable arrow-parens */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { nanoid } = require('nanoid');
 const books = require('./books');
@@ -73,6 +75,25 @@ const handlers = {
         },
       })
       .code(201);
+  },
+  getAllBooks: (req, h) => {
+    const booksWithCertainProps = [];
+    books.forEach(book =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      booksWithCertainProps.push({
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher,
+        // eslint-disable-next-line comma-dangle
+      })
+    );
+
+    return h.response({
+      status: 'success',
+      data: {
+        books: booksWithCertainProps,
+      },
+    });
   },
 };
 

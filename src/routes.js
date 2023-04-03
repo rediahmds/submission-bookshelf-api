@@ -8,9 +8,16 @@ const routes = [
     handler: handlers.home,
   },
   {
+    // Create new book(s) - Add book(s) to an array
     method: 'POST',
     path: '/books',
     handler: handlers.saveBooks,
+  },
+  {
+    // Read all books
+    method: 'GET',
+    path: '/books',
+    handler: handlers.getAllBooks,
   },
 ];
 
