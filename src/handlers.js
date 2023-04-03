@@ -88,10 +88,34 @@ const handlers = {
       })
     );
 
+    // If no query provided, show all books
     return h.response({
       status: 'success',
       data: {
         books: booksWithCertainProps,
+      },
+    });
+  },
+  getBookByID: (req, h) => {
+    const { id } = req.params;
+
+    const bookFound = books.find(book => book.id === id);
+
+    // If book not found, return error response
+    if (!bookFound) {
+      return h
+        .response({
+          status: 'fail',
+          message: 'Buku tidak ditemukan',
+        })
+        .code(404);
+    }
+
+    // If book found, return success response
+    return h.response({
+      status: 'success',
+      data: {
+        book: bookFound,
       },
     });
   },
