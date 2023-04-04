@@ -244,7 +244,7 @@ const handlers = {
         .code(404);
     }
 
-    // Update the book
+    // Update the books value
     const updatedAt = new Date().toISOString();
     const updatedBook = {
       ...bookFound,
@@ -259,6 +259,7 @@ const handlers = {
       reading,
     };
 
+    // Replace the book
     books.splice(bookIndex, 1, updatedBook);
     return h.response({
       status: 'success',
