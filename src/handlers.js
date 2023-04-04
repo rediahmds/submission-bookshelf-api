@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable function-paren-newline */
 /* eslint-disable arrow-parens */
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -79,15 +80,60 @@ const handlers = {
   getAllBooks: (req, h) => {
     const { name, reading, finished } = req.query;
     const booksMatch = [];
-    console.log(name);
 
     // QUERY BOOK BY NAME
     if (name) {
       const booksByName = books.filter(book =>
+        // eslint-disable-next-line comma-dangle
         book.name.toLowerCase().includes(name.toLowerCase())
       );
       booksByName.forEach(book =>
-        // eslint-disable-next-line implicit-arrow-linebreak
+        booksMatch.push({
+          id: book.id,
+          name: book.name,
+          publisher: book.publisher,
+          // eslint-disable-next-line comma-dangle
+        })
+      );
+
+      return h.response({
+        status: 'success',
+        data: {
+          books: booksMatch,
+        },
+      });
+    }
+
+    // QUERY BOOK BY ITS READ STATE - reading: true
+    if (parseInt(reading, 10) === 1) {
+      // Find books that meet the prerequisite
+      const booksInRead = books.filter(book => book.reading === true);
+
+      // Push to another array
+      booksInRead.forEach(book =>
+        booksMatch.push({
+          id: book.id,
+          name: book.name,
+          publisher: book.publisher,
+          // eslint-disable-next-line comma-dangle
+        })
+      );
+
+      return h.response({
+        status: 'success',
+        data: {
+          books: booksMatch,
+        },
+      });
+    }
+
+    // QUERY BOOK BY ITS READ STATE - reading: false
+    if (parseInt(reading, 10) === 0) {
+      // Find books that meet the prerequisite
+      const booksNotInRead = books.filter(book => book.reading === false);
+
+      // Push to another array
+      booksNotInRead.forEach(book =>
         booksMatch.push({
           id: book.id,
           name: book.name,
