@@ -79,6 +79,7 @@ const handlers = {
   getAllBooks: (req, h) => {
     const { name, reading, finished } = req.query;
     const booksMatch = [];
+    console.log(name);
 
     // QUERY BOOK BY NAME
     if (name) {
@@ -103,6 +104,7 @@ const handlers = {
       });
     }
 
+    // If no query provided, return all books
     books.forEach(book =>
       // eslint-disable-next-line implicit-arrow-linebreak
       booksMatch.push({
