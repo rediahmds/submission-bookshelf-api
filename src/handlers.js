@@ -83,10 +83,13 @@ const handlers = {
 
     // QUERY BOOK BY NAME
     if (name) {
+      // Filter book by name given in the query
       const booksByName = books.filter(book =>
         // eslint-disable-next-line comma-dangle
         book.name.toLowerCase().includes(name.toLowerCase())
       );
+
+      // Push the elements to another array
       booksByName.forEach(book =>
         booksMatch.push({
           id: book.id,
