@@ -153,6 +153,51 @@ const handlers = {
       });
     }
 
+    // QUERY BY BOOK FINISHED READING STATE - finished: true
+    if (parseInt(finished, 10) === 1) {
+      // filter the finished book
+      const finishedBooks = books.filter(book => book.finished === true);
+
+      // Push the elements to another array
+      finishedBooks.forEach(book =>
+        booksMatch.push({
+          id: book.id,
+          name: book.name,
+          publisher: book.publisher,
+          // eslint-disable-next-line comma-dangle
+        })
+      );
+
+      return h.response({
+        status: 'success',
+        data: {
+          books: booksMatch,
+        },
+      });
+    }
+    // QUERY BY BOOK FINISHED READING STATE - finished: false
+    if (parseInt(finished, 10) === 0) {
+      // filter the finished book
+      const finishedBooks = books.filter(book => book.finished === false);
+
+      // Push the elements to another array
+      finishedBooks.forEach(book =>
+        booksMatch.push({
+          id: book.id,
+          name: book.name,
+          publisher: book.publisher,
+          // eslint-disable-next-line comma-dangle
+        })
+      );
+
+      return h.response({
+        status: 'success',
+        data: {
+          books: booksMatch,
+        },
+      });
+    }
+
     // If no query provided, return all books
     books.forEach(book =>
       // eslint-disable-next-line implicit-arrow-linebreak
