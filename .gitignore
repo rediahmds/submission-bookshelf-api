@@ -1,2 +1,6 @@
 # Ignore listed folder
 node_modules
+
+# Ignore these files
+Bookshelf API Test.postman_collection.json
+Bookshelf API Test.postman_environment.json
