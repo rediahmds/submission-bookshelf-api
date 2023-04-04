@@ -77,10 +77,35 @@ const handlers = {
       .code(201);
   },
   getAllBooks: (req, h) => {
-    const booksWithCertainProps = [];
+    const { name, reading, finished } = req.query;
+    const booksMatch = [];
+
+    // QUERY BOOK BY NAME
+    if (name) {
+      const booksByName = books.filter(book =>
+        book.name.toLowerCase().includes(name.toLowerCase())
+      );
+      booksByName.forEach(book =>
+        // eslint-disable-next-line implicit-arrow-linebreak
+        booksMatch.push({
+          id: book.id,
+          name: book.name,
+          publisher: book.publisher,
+          // eslint-disable-next-line comma-dangle
+        })
+      );
+
+      return h.response({
+        status: 'success',
+        data: {
+          books: booksMatch,
+        },
+      });
+    }
+
     books.forEach(book =>
       // eslint-disable-next-line implicit-arrow-linebreak
-      booksWithCertainProps.push({
+      booksMatch.push({
         id: book.id,
         name: book.name,
         publisher: book.publisher,
@@ -92,7 +117,7 @@ const handlers = {
     return h.response({
       status: 'success',
       data: {
-        books: booksWithCertainProps,
+        books: booksMatch,
       },
     });
   },
